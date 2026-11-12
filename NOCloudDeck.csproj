@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- NO Cloud Deck: a BepInEx 5 plugin for Nuclear Option that turns the Overcast and Thunderstorm weather into a
+       Pacific Northwest rain day for the missions it is set up for (default "Cascadia Falling"): a cloud deck from the
+       mission's cloud altitude (base) up to a configured top, clear air under the base with rain haze, rain with sound
+       from a regional rain map, and occasional lightning that reaches the ground. Purely visual, per player.
+       Build: dotnet build -c Release.  Install: copy bin/NOCloudDeck.dll into BepInEx/plugins/. -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>NOCloudDeck</AssemblyName>
+    <RootNamespace>CloudDeck</RootNamespace>
+    <Version>1.2.0</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <OutputPath>bin</OutputPath>
+    <DebugType>none</DebugType>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
+  <!-- the game folder; override with an environment variable or "dotnet build -p:GameDir=..." -->
+  <PropertyGroup Condition="'$(GameDir)' == ''">
+    <GameDir>D:\SteamLibrary\steamapps\common\Nuclear Option</GameDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- the regional rain map written by tools/rainmap.py (256 x 256 bytes + header), and the cloud map written by tools/cloudmap.py (128 x 128, four planes) -->
+    <EmbeddedResource Include="Resources\rainmap.bin" LogicalName="NOCloudDeck.rainmap.bin" />
+    <EmbeddedResource Include="Resources\cloudmap.bin" LogicalName="NOCloudDeck.cloudmap.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="BepInEx">
+      <HintPath>$(GameDir)\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(GameDir)\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(GameDir)\NuclearOption_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(GameDir)\NuclearOption_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(GameDir)\NuclearOption_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>$(GameDir)\NuclearOption_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(GameDir)\NuclearOption_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(GameDir)\NuclearOption_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Mirage">
+      <HintPath>$(GameDir)\NuclearOption_Data\Managed\Mirage.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
