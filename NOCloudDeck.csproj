@@ -11,6 +11,8 @@
     <AssemblyName>NOCloudDeck</AssemblyName>
     <RootNamespace>CloudDeck</RootNamespace>
     <Version>1.2.0</Version>
+    <!-- No git commit hash in the version string: a clone of the repository then builds the released DLL byte for byte. -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
